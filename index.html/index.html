@@ -178,6 +178,10 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
 
+        .no-hover:hover {
+            transform: none !important;
+        }
+
         .gallery img.enlarged {
             position: fixed;
             top: 20%;
@@ -374,7 +378,7 @@
                 ">Gallery of Memories!</h2>
 
   <div class="gallery">
-    <img src="images/flower.jpg" alt="Our first meeting">
+    <img src="images/flower.jpg" alt="Normal Image" class="no-hover">
     <img src="images/1.jpg" alt="A fun day out">
     <img src="images/2.jpg" alt="A fun day out">
     <img src="images/3.jpg" alt="A fun day out">
@@ -421,20 +425,20 @@
     
     <script>
 
-       const gallery = document.querySelector('.gallery');
-const galleryImages = document.querySelectorAll('.gallery img');
-const overlay = document.querySelector('.overlay');
-let galleryOpened = false;
+        const gallery = document.querySelector('.gallery');
+        const galleryImages = document.querySelectorAll('.gallery img');
+        const overlay = document.querySelector('.overlay');
+        let galleryOpened = false;
 
-galleryImages[0].addEventListener('click', () => {
-    if (!galleryOpened) {
+        galleryImages[0].addEventListener('click', () => {
+        if (!galleryOpened) {
         gallery.classList.add('active');
         galleryOpened = true;
-    }
-});
+        }
+    });
 
-galleryImages.forEach(img => {
-    img.addEventListener('click', () => {
+        galleryImages.forEach(img => {
+        img.addEventListener('click', () => {
         if (galleryOpened && img !== galleryImages[0]) {
             const isEnlarged = img.classList.contains('enlarged');
             galleryImages.forEach(i => i.classList.remove('enlarged'));
@@ -447,10 +451,10 @@ galleryImages.forEach(img => {
     });
 });
 
-overlay.addEventListener('click', () => {
-    galleryImages.forEach(i => i.classList.remove('enlarged'));
-    overlay.classList.remove('active');
-});
+        overlay.addEventListener('click', () => {
+        galleryImages.forEach(i => i.classList.remove('enlarged'));
+        overlay.classList.remove('active');
+    });
 
 
         overlay.addEventListener('click', () => {
@@ -500,11 +504,19 @@ overlay.addEventListener('click', () => {
         });
         
         function hideAllSections() {
-            document.getElementById('sectionHome').style.display = 'none';
-            document.getElementById('section1').style.display = 'none';
-            document.getElementById('section2').style.display = 'none';
-            document.getElementById('section3').style.display = 'none';
-        }
+    document.getElementById('sectionHome').style.display = 'none';
+    document.getElementById('section1').style.display = 'none';
+    document.getElementById('section2').style.display = 'none';
+    document.getElementById('section3').style.display = 'none';
+
+    
+    gallery.classList.remove('active');
+    galleryImages.forEach(img => img.classList.remove('enlarged'));
+    overlay.classList.remove('active');
+    galleryOpened = false; 
+    }
+
     </script>
 </body>
 </html>
+
