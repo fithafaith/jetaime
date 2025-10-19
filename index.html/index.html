@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Je t'aime</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Asset&family=Oi&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Asset&family=Oi&family=Pacifico&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Meow+Script&family=Pacifico&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffcece;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; 
+            flex-direction: column;
+            min-height: 100vh; 
+        }
+        
+        #secret-code-form {
+            text-align: center;
+            margin: 20px auto; 
+            max-width: 90%;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #000000;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        #main-content {
+            display: none;
+            text-align: center;
+            max-width: 95%; 
+            width: 100%;
+            padding: 10px; 
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 20px; 
+            color: #e74c3c;
+        }
+        
+        h1 {
+            font-size: 40px; 
+            font-weight: bold;
+        }
+        
+        .section {
+            display: none;
+            margin: 10px auto; 
+            padding: 15px; 
+            background-color: #fff;
+            border: 1px solid balck;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 95%; 
+            width: 100%;
+            text-align: center;
+            overflow: auto; 
+        }
+        
+        .button-container {
+            text-align: center;
+            margin: 10px 0; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px; 
+            flex-wrap: wrap;
+        }
+        
+        .image-button {
+            cursor: pointer;
+            width: 120px; 
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .image-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        #letter {
+            font-family: 'cursive', 'Comic Sans MS', cursive;
+            line-height: 1.6;
+            font-size: 16px; 
+        }
+        
+        #pictures img {
+            width: 150px; 
+            height: auto;
+            margin: 5px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        #spotify {
+            text-align: center;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 20px; 
+            font-style: italic;
+            color: #2c3e50;
+            font-size: 14px; 
+        }
+
+        .images {
+            justify-content: space-around;
+            height: 100%;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto; 
+            justify-items: center; 
+        }
+
+        
+        .gallery img:not(:first-child) {
+            display: none;
+        }
+
+
+        .gallery.active img {
+            display: block;
+            animation: burst 1s ease forwards;
+        }
+
+
+        @keyframes burst {
+            from {
+            transform: scale(0.3);
+            opacity: 0;
+        }
+            to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+        .gallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.5);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        .gallery img.enlarged {
+            position: fixed;
+            top: 20%;
+            left: 30%;
+            max-width: 50vw;   
+            max-height: 50vh;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%) scale(1);
+            z-index: 999;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            transition: all 0.3s ease-in-out;
+            object-fit: contain;
+        }
+
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.4);
+            display: none;
+            z-index: 998;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .gallery img {
+            height: 150px;
+        }
+        }
+
+        @keyframes float {
+            0%, 100% {
+            transform: translateY(0);
+        }
+            50% {
+            transform: translateY(-10px);
+         }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px; 
+            }
+            
+            h1 {
+                font-size: 35px; 
+            }
+            
+            .section {
+                padding: 10px; 
+                font-size: 14px; 
+            }
+            
+            .image-button {
+                width: 100px; 
+            }
+            
+            #pictures img {
+                width: 120px; 
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 5px; 
+            }
+            
+            h1 {
+                font-size: 28px; /
+            }
+            
+            .button-container {
+                flex-direction: row; 
+                gap: 10px;
+            }
+            
+            .image-button {
+                width: 80%; 
+                max-width: 150px; 
+            }
+            
+            .section {
+                padding: 10px;
+                font-size: 12px; 
+                margin: 5px auto;
+            }
+            
+            #pictures img {
+                width: 100%; 
+                max-width: 200px; 
+            }
+            
+            iframe { 
+                width: 100%; 
+                max-width: 300px;
+                height: 200px; 
+            }
+        }
+
+        @keyframes burst {
+            0% {
+            transform: scale(0.3) rotate(-10deg);
+            opacity: 0;
+            filter: brightness(1.2);
+        }
+            70% {
+            transform: scale(1.1) rotate(5deg);
+            opacity: 1;
+        }
+            100% {
+            transform: scale(1);
+            rotate: 0deg;
+            filter: brightness(1);
+        }
+    }
+
+    </style>
+</head>
+
+<body>
+    <div id="secret-code-form">
+        <h1 style="color: #ff8282; text-shadow: 2px 1px 2px rgb(96, 96, 96);">
+            Enter the Secret Code</h1>
+        <form id="codeForm">
+            <input type="password" id="codeInput" placeholder="Type the secret code here" required>
+            <button type="submit " style="">Submit</button>
+        </form>
+        <p id="errorMessage" style="color: red; display: none;">Incorrect code. Please try again.</p>
+    </div>
+    
+    <div id="main-content">
+        <header>
+            <h1 style=
+            "font-family: 'Asset', serif; 
+            font-size: 60px;
+            letter-spacing: 10px;
+            text-shadow:  2px 5px rgba(0,0,0,0.15);
+            animation: float 3s ease-in-out infinite;
+            line-height: 1.2; "
+            >Hi Bub!</h1>
+        </header>
+        
+        <main>
+            <div class="button-container">
+                <img src="images/home.jpg" id="btnSectionHome" class="image-button" alt="Home">
+                <img src="images/letter.jpg" id="btnSection1" class="image-button" alt="Letter">
+                <img src="images/photos.jpg" id="btnSection2" class="image-button" alt="Photos">
+                <img src="images/music (2).jpg" id="btnSection3" class="image-button" alt="Songs">
+            </div>
+            
+            <section id="sectionHome" class="section">
+                <h2 style="
+                    font-family: 'Pacifico', serif;
+                    letter-spacing: 2px;
+                    ">Welcome to Our Special Page!</h2>
+                <p>This is your home page. Click on the images above to explore letters, photos, and songs. I hope you enjoy this little surprise!</p>
+            </section>
+            
+            <section id="section1" class="section">
+                <h2 style="
+                    font-family: 'Pacifico', serif;
+                    letter-spacing: 2px;
+                    font-size: 50px;
+                    ">Dear Love,</h2>
+                <p style="
+                text-align: center;
+                line-height: 40px;
+                font-family: 'Meow Script', serif;
+                font-size: 40px;
+                text-decoration: solid;
+                ">
+                    I miss you so much.<br><br>
+                    I made this website because I want it to serve as your constant reminder of how much I love you—<br>
+                    even on days that we're silent and distant, even on days that you feel like your unlovable,<br>
+                    even on days that we're upset with each other—my heart is always yours no matter what.<br><br>
+                    I hope that whenever you're feeling down and I'm not there with you,<br> this website can place a smile on your face
+                    and comfort you in ways that you need to.<br>Just know that I'm always here for you, iloveyou so much palangga ko!
+                </p>
+
+            </section>
+            
+            <section id="section2" class="section">
+                <h2 style="
+                font-family: 'Pacifico', serif;
+                letter-spacing: 2px;
+                ">Gallery of Memories!</h2>
+
+  <div class="gallery">
+    <img src="images/flower.jpg" alt="Our first meeting">
+    <img src="images/1.jpg" alt="A fun day out">
+    <img src="images/2.jpg" alt="A fun day out">
+    <img src="images/3.jpg" alt="A fun day out">
+    <img src="images/4.jpg" alt="A fun day out">
+    <img src="images/5.jpg" alt="A fun day out">
+    <img src="images/6.jpg" alt="A fun day out">
+    <img src="images/7.jpg" alt="A fun day out">
+    <img src="images/8.jpg" alt="A fun day out">
+    <img src="images/9.jpg" alt="A fun day out">
+    <img src="images/10.jpg" alt="A fun day out">
+    <img src="images/11.jpg" alt="A fun day out">
+    <img src="images/12.jpg" alt="A fun day out">
+    <img src="images/13.jpg" alt="A fun day out">
+    <img src="images/14.jpg" alt="A fun day out">
+    <img src="images/15.jpg" alt="A fun day out">
+    <img src="images/16.jpg" alt="A fun day out">
+    <img src="images/17.jpg" alt="A fun day out">
+    <img src="images/18.jpg" alt="A fun day out">
+    <img src="images/19.jpg" alt="A fun day out">
+    <img src="images/20.jpg" alt="A fun day out">
+    <img src="images/21.jpg" alt="A fun day out">
+    <img src="images/22.jpg" alt="A fun day out">
+    <img src="images/23.jpg" alt="A fun day out">
+    <img src="images/24.jpg" alt="A fun day out">
+  </div>
+
+  <div class="overlay"></div>
+</section>
+
+            
+            <section id="section3" class="section">
+                <h2 style="
+                    font-family: 'Pacifico', serif;
+                    letter-spacing: 2px;
+                    ">Songs That Make Me Think of You!</h2>
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/58CNZSXo4wJmwl4eSFcy2y?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </section>
+        </main>
+        
+        <footer>
+            
+        </footer>
+    </div>
+    
+    <script>
+
+       const gallery = document.querySelector('.gallery');
+const galleryImages = document.querySelectorAll('.gallery img');
+const overlay = document.querySelector('.overlay');
+let galleryOpened = false;
+
+galleryImages[0].addEventListener('click', () => {
+    if (!galleryOpened) {
+        gallery.classList.add('active');
+        galleryOpened = true;
+    }
+});
+
+galleryImages.forEach(img => {
+    img.addEventListener('click', () => {
+        if (galleryOpened && img !== galleryImages[0]) {
+            const isEnlarged = img.classList.contains('enlarged');
+            galleryImages.forEach(i => i.classList.remove('enlarged'));
+            overlay.classList.remove('active');
+            if (!isEnlarged) {
+                img.classList.add('enlarged');
+                overlay.classList.add('active');
+            }
+        }
+    });
+});
+
+overlay.addEventListener('click', () => {
+    galleryImages.forEach(i => i.classList.remove('enlarged'));
+    overlay.classList.remove('active');
+});
+
+
+        overlay.addEventListener('click', () => {
+        images.forEach(i => i.classList.remove('enlarged'));
+        overlay.classList.remove('active');
+    });
+
+        const secretCode = "iloveyou";  
+        const form = document.getElementById('codeForm');
+        const errorMessage = document.getElementById('errorMessage');
+        const mainContent = document.getElementById('main-content');
+        const secretForm = document.getElementById('secret-code-form');
+        
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();  
+            const enteredCode = document.getElementById('codeInput').value;
+            
+            if (enteredCode === secretCode) {
+                secretForm.style.display = 'none';  
+                mainContent.style.display = 'block';  
+                hideAllSections();  
+                document.getElementById('sectionHome').style.display = 'block';  
+            } else {
+                errorMessage.style.display = 'block';  
+                document.getElementById('codeInput').value = '';  
+            }
+        });
+        
+        document.getElementById('btnSectionHome').addEventListener('click', function() {
+            hideAllSections();
+            document.getElementById('sectionHome').style.display = 'block';
+        });
+        
+        document.getElementById('btnSection1').addEventListener('click', function() {
+            hideAllSections();
+            document.getElementById('section1').style.display = 'block';
+        });
+        
+        document.getElementById('btnSection2').addEventListener('click', function() {
+            hideAllSections();
+            document.getElementById('section2').style.display = 'block';
+        });
+        
+        document.getElementById('btnSection3').addEventListener('click', function() {
+            hideAllSections();
+            document.getElementById('section3').style.display = 'block';
+        });
+        
+        function hideAllSections() {
+            document.getElementById('sectionHome').style.display = 'none';
+            document.getElementById('section1').style.display = 'none';
+            document.getElementById('section2').style.display = 'none';
+            document.getElementById('section3').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
